@@ -25,7 +25,7 @@ function colorRow(r){
     dataRange.setBackgroundRGB(255, 192, 192); /*red*/
   }
 
-  SpreadsheetApp.flush(); 
+  SpreadsheetApp.flush();
 }
 
 function onEdit(event)
@@ -39,4 +39,3 @@ function onEdit(event)
 function onOpen(){
   colorAll();
 }
-​
