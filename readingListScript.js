@@ -1,41 +1,68 @@
-function colorAll() {
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var startRow = 2;
-  var endRow = sheet.getLastRow();
-
-  for (var r = startRow; r <= endRow; r++) {
-    colorRow(r);
-  }
+function setRowColors() {
+        var range = SpreadsheetApp.getActiveSheet().getDataRange();
+        var statusColumnOffset = getStatusColumnOffset();
+        for (var i = range.getRow(); i < range.getLastRow(); i++) {
+            rowRange = range.offset(i, 0, 1);
+            status = rowRange.offset(0, statusColumnOffset).getValue();
+            if (status == 'Finished') {
+                rowRange.setBackgroundColor("#C2FFC2"); //green 
+            } else if (status == 'Reading') {
+                rowRange.setBackgroundColor("#FFFFC2"); //yellow
+            } else if (status == 'Not Started') {
+                rowRange.setBackgroundColor("#FFFFFF"); //white
+            } else if (status == 'Unfinished') {
+                rowRange.setBackgroundColor("#FFC2C2"); //red
+            }
+        }
+    }
+    //Returns the offset value of the column titled "Status"
+    //(eg, if the 7th column is labeled "Status", this function returns 6)
+function getStatusColumnOffset() {
+    lastColumn = SpreadsheetApp.getActiveSheet().getLastColumn();
+    var range = SpreadsheetApp.getActiveSheet().getRange(1, 1, 1, lastColumn);
+    for (var i = 0; i < range.getLastColumn(); i++) {
+        if (range.offset(0, i, 1, 1).getValue() == "Status") {
+            return i;
+        }
+    }
 }
 
-function colorRow(r){
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var dataRange = sheet.getRange(r, 1, 1, 3);
-
-  var data = dataRange.getValues();
-  var row = data[0];
-
-  if(row[0] === ""){
-    dataRange.setBackgroundRGB(255, 255, 255); /*white*/
-  }else if(row[0] > 0){
-    dataRange.setBackgroundRGB(192, 255, 192); /*green*/
-  // }else if(row[0] > 0){
-  //   dataRange.setBackgroundRGB(255, 255, 194); /*yellow*/    
-  }else{
-    dataRange.setBackgroundRGB(255, 192, 192); /*red*/
-  }
-
-  SpreadsheetApp.flush();
-}
-
-function onEdit(event)
-{
-  var r = event.source.getActiveRange().getRowIndex();
-  if (r >= 2) {
-    colorRow(r);
-  }
-}
-
-function onOpen(){
-  colorAll();
+// TODO: Make a 'reset' expression to make cells white again if they are changed.
+/********************
+* Rewrite the Top code, using a Switch Statement *
+********************/
+function setRowColors() {
+        var range = SpreadsheetApp.getActiveSheet().getDataRange();
+        var statusColumnOffset = getStatusColumnOffset();
+        for (var i = range.getRow(); i < range.getLastRow(); i++) {
+            rowRange = range.offset(i, 0, 1);
+            status = rowRange.offset(0, statusColumnOffset).getValue();
+            switch(status) {
+                case status == 'Finished':
+                  rowRange.setBackgroundColor("#C2FFC2"); //green
+                  break;
+                case status == 'Reading':
+                  rowRange.setBackgroundColor("#FFFFC2"); //yellow
+                  break;
+                case status == 'Not Started':
+                  rowRange.setBackgroundColor("#FFFFFF"); //white
+                  break;
+                case status == 'Unfinished':
+                  rowRange.setBackgroundColor("#FFC2C2"); //red
+                  break;
+                default:
+                  rowRange.setBackgroundColor("#FFFFFF"); //white
+            }
+        }
+    }
+    //Returns the offset value of the column titled "Status"
+    //(eg, if the 7th column is labeled "Status", this function returns 6)
+function getStatusColumnOffset() {
+    lastColumn = SpreadsheetApp.getActiveSheet().getLastColumn();
+    var range = SpreadsheetApp.getActiveSheet().getRange(1, 1, 1, lastColumn);
+    for (var i = 0; i < range.getLastColumn(); i++) {
+        if (range.offset(0, i, 1, 1).getValue() == "Status") {
+            return i;
+        }
+    }
 }
