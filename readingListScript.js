@@ -4,14 +4,18 @@ function setRowColors() {
         for (var i = range.getRow(); i < range.getLastRow(); i++) {
             rowRange = range.offset(i, 0, 1);
             status = rowRange.offset(0, statusColumnOffset).getValue();
-            if (status == 'Finished') {
+            if (status.match(/Finished*/)) {
                 rowRange.setBackgroundColor("#C2FFC2"); //green 
             } else if (status == 'Reading') {
                 rowRange.setBackgroundColor("#FFFFC2"); //yellow
             } else if (status == 'Not Started') {
-                rowRange.setBackgroundColor("#FFFFFF"); //white
+                rowRange.setBackgroundColor("#FFFFFF"); //blue
             } else if (status == 'Unfinished') {
-                rowRange.setBackgroundColor("#FFC2C2"); //red
+                rowRange.setBackgroundColor("#FFC2C2"); //red            
+            } else if (status === '') {
+            rowRange.setBackgroundColor("#FFFFFF"); //red
+            } else if (status === 'Reference') {
+            rowRange.setBackgroundColor("#FFE0C2"); //red
             }
         }
     }
