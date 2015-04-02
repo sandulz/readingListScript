@@ -1,5 +1,6 @@
 function onEdit(e) {
     setRowColors("getActiveSheet","range");
+    insertTopRow();
 }
 function setRowColors() {
         var range = SpreadsheetApp.getActiveSheet().getDataRange();
@@ -12,13 +13,13 @@ function setRowColors() {
             } else if (status == 'Reading') {
                 rowRange.setBackgroundColor("#FFFFC2"); //yellow
             } else if (status == 'Not Started') {
-                rowRange.setBackgroundColor("#FFFFFF"); //blue
+                rowRange.setBackgroundColor("#FFFFFF"); //white
             } else if (status == 'Unfinished') {
                 rowRange.setBackgroundColor("#FFC2C2"); //red            
             } else if (status === '') {
-            rowRange.setBackgroundColor("#FFFFFF"); //red
+            rowRange.setBackgroundColor("#FFFFFF"); //white
             } else if (status === 'Reference') {
-            rowRange.setBackgroundColor("#FFE0C2"); //red
+            rowRange.setBackgroundColor("#FFE0C2"); //orange
             }
         }
     }
@@ -34,18 +35,16 @@ function getStatusColumnOffset() {
     }
 }
 function insertTopRow() {
-    var row = SpreadsheetApp.getActiveSheet();
-    if (true) {};
-    insertRows(rowIndex);
+    var ss = SpreadsheetApp.getActiveSheet();
+    var rowsArray = ss.getRange("A2:J2").getValues(); //getRange (row, column, numRows, numColumns)
+    var firstRow = rowsArray.join();
+        if (firstRow.match(/\w/)) {
+            ss.insertRows(2);
+    }
 }
-
 
 /********************
 * TODO *
 ********************/
-// Make the top row always empty, and move them down when it gets full, like Gmail.
-    // If the top row isn't empty, then add one row at the top Position 2.
 
-// Sort the Sheet by date entered - Isn't this going to be automatic, by nature? 
-
-//Can I automate adding a book? From the Kindle? 
+// Import the book information, using just the ISBN lookup, from Google Book API
