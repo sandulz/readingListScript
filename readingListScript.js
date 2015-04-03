@@ -36,7 +36,7 @@ function getStatusColumnOffset() {
 }
 function insertTopRow() {
     var ss = SpreadsheetApp.getActiveSheet();
-    var rowsArray = ss.getRange("A2:J2").getValues(); //getRange (row, column, numRows, numColumns)
+    var rowsArray = ss.getRange("A2:J2").getValues();
     var firstRow = rowsArray.join();
         if (firstRow.match(/\w/)) {
             ss.insertRows(2);
@@ -46,5 +46,7 @@ function insertTopRow() {
 /********************
 * TODO *
 ********************/
-
 // Import the book information, using just the ISBN lookup, from Google Book API
+// https://developers.google.com/books/docs/v1/getting_started
+// https://www.googleapis.com/books/v1/volumes?q=isbn:1585421464
+// Must use the 10 digit ISMN for google API
