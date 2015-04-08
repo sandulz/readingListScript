@@ -1,6 +1,7 @@
 function onEdit(e) {
     setRowColors("getActiveSheet","range");
     insertTopRow();
+    retrieveBookData();
 }
 function setRowColors() {
         var range = SpreadsheetApp.getActiveSheet().getDataRange();
@@ -42,6 +43,30 @@ function insertTopRow() {
             ss.insertRows(2);
     }
 }
+function retrieveBookData() {
+    var ss = SpreadsheetApp.getActiveSheet();
+    // other parent variables
+
+    function formatIsbn () { //remove any non-digits to leave 10 or 13 digit number
+    var unformattedNumber = ss.getFirstColumn().getValues();
+
+        unformattedNumber.replace(/\D/g, '');
+    }
+}
+
+// just method, object, var, etc, resources for above code
+// HTTPResponse.getContentText()
+// JSON.parse()
+// document.write(items.title)
+// document.write(items.subtitle)
+// document.write(items.authors)
+// document.write(items.publisher)
+// document.write(items.publishedDate)
+// document.write(items.pageCount)
+// document.write(items.printType)
+
+
+
 
 /********************
 * TODO *
@@ -49,5 +74,11 @@ function insertTopRow() {
 
 // Import the book information, using just the ISBN lookup, from Google Book API
 // https://developers.google.com/books/docs/v1/getting_started
-// https://www.googleapis.com/books/v1/volumes?q=isbn:1585421464
-// Must use the 10 digit ISMN for google API
+// https://www.googleapis.com/books/v1/volumes?q=isbn:9780061766084
+// https://www.googleapis.com/apiName/apiVersion/resourcePath?parameters
+// Can be 10 or 13 digit ISBN for google API
+
+// Maybe make it an action in a cell? ie =bookAPI(ISBN#)
+
+
+
