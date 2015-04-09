@@ -18,9 +18,9 @@ function setRowColors() {
             } else if (status == 'Unfinished') {
                 rowRange.setBackgroundColor("#FFC2C2"); //red            
             } else if (status === '') {
-            rowRange.setBackgroundColor("#FFFFFF"); //white
+                rowRange.setBackgroundColor("#FFFFFF"); //white
             } else if (status === 'Reference') {
-            rowRange.setBackgroundColor("#FFE0C2"); //orange
+                rowRange.setBackgroundColor("#FFE0C2"); //orange
             }
         }
     }
@@ -44,13 +44,18 @@ function insertTopRow() {
     }
 }
 function retrieveBookData() {
-    var ss = SpreadsheetApp.getActiveSheet();
-    // other parent variables
-
-    function formatIsbn () { //remove any non-digits to leave 10 or 13 digit number
-    var unformattedNumber = ss.getFirstColumn().getValues();
-
-        unformattedNumber.replace(/\D/g, '');
+    var formatISBN = function() {
+    var range = SpreadsheetApp.getActiveSheet().getRange('A:A');
+        for (var i = range.getRow(); i < range.getLastRow(); i++) {
+            cell = range.offset(i, 0, 1);
+            cellData = cell.getValue() + "";
+            formattedData = cellData.replace(/[^0-9]+/g, '');
+            cell.setValue(formattedData);
+        }
+    };
+    formatISBN();
+    function callGoogleAPI() {
+        // call the Google Book API and return the JSON file, parse and insert into right cells
     }
 }
 
@@ -77,8 +82,4 @@ function retrieveBookData() {
 // https://www.googleapis.com/books/v1/volumes?q=isbn:9780061766084
 // https://www.googleapis.com/apiName/apiVersion/resourcePath?parameters
 // Can be 10 or 13 digit ISBN for google API
-
-// Maybe make it an action in a cell? ie =bookAPI(ISBN#)
-
-
 
