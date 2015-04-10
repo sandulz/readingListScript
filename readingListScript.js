@@ -47,11 +47,31 @@ var range = SpreadsheetApp.getActiveSheet().getRange('A:A');
         cell.setValue(formattedData);
     }
 };
+function retrieveBookData() {
+    var range = SpreadsheetApp.getActiveSheet().getDataRange();
+    for (var i = range.getRow(); i < range.getLastRow(); i++) {
+        rowRange = range.offset(i, 0, 1);
+        cellData = rowRange.offset(0, 0).getValue();
+        Logger.log(cellData);
+
+      
+        if (cellData != "undefined") {
+            var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData;
+            Logger.log(url);
+            var json = fetch(url);
+            //var json = HTTPResponse.getContentText();
+            //var data = JSON.parse(json);
+
+            //break;
+        }
+    }
+}
 // Putting this at the bottom, to work with JS best practices
 function onEdit(e) {
     setRowColors();
     insertTopRow();
     formatISBN();
+    retrieveBookData();
 }
 
 // just method, object, var, etc, resources for above code
