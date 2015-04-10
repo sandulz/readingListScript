@@ -1,8 +1,3 @@
-function onEdit(e) {
-    setRowColors("getActiveSheet","range");
-    insertTopRow();
-    retrieveBookData();
-}
 function setRowColors() {
         var range = SpreadsheetApp.getActiveSheet().getDataRange();
         var statusColumnOffset = getStatusColumnOffset();
@@ -43,20 +38,20 @@ function insertTopRow() {
             ss.insertRows(2);
     }
 }
-function retrieveBookData() {
-    var formatISBN = function() {
-    var range = SpreadsheetApp.getActiveSheet().getRange('A:A');
-        for (var i = range.getRow(); i < range.getLastRow(); i++) {
-            cell = range.offset(i, 0, 1);
-            cellData = cell.getValue() + "";
-            formattedData = cellData.replace(/[^0-9]+/g, '');
-            cell.setValue(formattedData);
-        }
-    };
-    formatISBN();
-    function callGoogleAPI() {
-        // call the Google Book API and return the JSON file, parse and insert into right cells
+var formatISBN = function() {
+var range = SpreadsheetApp.getActiveSheet().getRange('A:A');
+    for (var i = range.getRow(); i < range.getLastRow(); i++) {
+        cell = range.offset(i, 0, 1);
+        cellData = cell.getValue() + "";
+        formattedData = cellData.replace(/[^0-9]+/g, '');
+        cell.setValue(formattedData);
     }
+};
+// Putting this at the bottom, to work with JS best practices
+function onEdit(e) {
+    setRowColors();
+    insertTopRow();
+    formatISBN();
 }
 
 // just method, object, var, etc, resources for above code
