@@ -47,40 +47,54 @@ var range = SpreadsheetApp.getActiveSheet().getRange('A:A');
         cell.setValue(formattedData);
     }
 };
-function retrieveBookData() {
+function fetchBookData() {
     var range = SpreadsheetApp.getActiveSheet().getDataRange();
     for (var i = range.getRow(); i < range.getLastRow(); i++) {
         rowRange = range.offset(i, 0, 1);
         cellData = rowRange.offset(0, 0).getValue();
-        Logger.log(cellData);
+        
 
-      
         if (cellData != "undefined") {
             var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData;
-            var response = UrlFetchApp.fetch(url); //get JSON feed
+            var response = UrlFetchApp.fetch(url);
             var dataAll = JSON.parse(response);
-            var title = (dataAll.items[0]["volumeInfo"]["title"]);
-            Logger.log(title);
-            var subtitle = (dataAll.items[0]["volumeInfo"]["subtitle"]);
-            Logger.log(subtitle);
-            var authors = (dataAll.items[0]["volumeInfo"]["authors"]);
-            Logger.log(authors);
-            var printType = (dataAll.items[0]["volumeInfo"]["printType"]);
-            Logger.log(printType);
-            var pageCount = (dataAll.items[0]["volumeInfo"]["pageCount"]);
-            Logger.log(pageCount);
-            var publisher = (dataAll.items[0]["volumeInfo"]["publisher"]);
-            Logger.log(publisher);
-            var publishedDate = (dataAll.items[0]["volumeInfo"]["publishedDate"]);
-            Logger.log(publishedDate);
-            var webReaderLink = (dataAll.items[0]["accessInfo"]["webReaderLink"]);
-            Logger.log(webReaderLink);
 
-            //var json = HTTPResponse.getContentText();
-            //var data = JSON.parse(json);
+            var title = (dataAll.items[0]["volumeInfo"]["title"]);
+            var titleCell = range.offset(i, 1, 1, 1);
+                titleCell.setValue(title);
+
+            var subtitle = (dataAll.items[0]["volumeInfo"]["subtitle"]);
+            var subtitleCell = range.offset(i, 2, 1, 1);
+                subtitleCell.setValue(subtitle);
+                
+            var authors = (dataAll.items[0]["volumeInfo"]["authors"]);
+            var authorsCell = range.offset(i, 3, 1, 1);
+                authorsCell.setValue(authors);
+
+            var printType = (dataAll.items[0]["volumeInfo"]["printType"]);
+            var printTypeCell = range.offset(i, 4, 1, 1);
+                printTypeCell.setValue(printType);
+            
+            var pageCount = (dataAll.items[0]["volumeInfo"]["pageCount"]);
+            var pageCountCell = range.offset(i, 5, 1, 1);
+                pageCountCell.setValue(pageCount);
+            
+            var publisher = (dataAll.items[0]["volumeInfo"]["publisher"]);
+            var publisherCell = range.offset(i, 6, 1, 1);
+                publisherCell.setValue(publisher);
+            
+            var publishedDate = (dataAll.items[0]["volumeInfo"]["publishedDate"]);
+            var publishedDateCell = range.offset(i, 7, 1, 1);
+                publishedDateCell.setValue(publishedDate);
+            
+            var webReaderLink = (dataAll.items[0]["accessInfo"]["webReaderLink"]);
+            var webReaderLinkCell = range.offset(i, 10, 1, 1);
+                webReaderLinkCell.setValue(webReaderLink);
+            
 
             //break;
-            // insert information into the right column, of the current row
+            // fix undefined results
+            // fix empty cell query mystery google API book
         }
     }
 }
@@ -89,19 +103,10 @@ function onEdit(e) {
     setRowColors();
     insertTopRow();
     formatISBN();
-    retrieveBookData();
+    fetchBookData();
 }
 
-// just method, object, var, etc, resources for above code
-// HTTPResponse.getContentText()
-// JSON.parse()
-// document.write(items.title)
-// document.write(items.subtitle)
-// document.write(items.authors)
-// document.write(items.publisher)
-// document.write(items.publishedDate)
-// document.write(items.pageCount)
-// document.write(items.printType)
+
 
 
 
