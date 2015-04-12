@@ -57,12 +57,30 @@ function retrieveBookData() {
       
         if (cellData != "undefined") {
             var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData;
-            Logger.log(url);
-            var json = fetch(url);
+            var response = UrlFetchApp.fetch(url); //get JSON feed
+            var dataAll = JSON.parse(response);
+            var title = (dataAll.items[0]["volumeInfo"]["title"]);
+            Logger.log(title);
+            var subtitle = (dataAll.items[0]["volumeInfo"]["subtitle"]);
+            Logger.log(subtitle);
+            var authors = (dataAll.items[0]["volumeInfo"]["authors"]);
+            Logger.log(authors);
+            var printType = (dataAll.items[0]["volumeInfo"]["printType"]);
+            Logger.log(printType);
+            var pageCount = (dataAll.items[0]["volumeInfo"]["pageCount"]);
+            Logger.log(pageCount);
+            var publisher = (dataAll.items[0]["volumeInfo"]["publisher"]);
+            Logger.log(publisher);
+            var publishedDate = (dataAll.items[0]["volumeInfo"]["publishedDate"]);
+            Logger.log(publishedDate);
+            var webReaderLink = (dataAll.items[0]["accessInfo"]["webReaderLink"]);
+            Logger.log(webReaderLink);
+
             //var json = HTTPResponse.getContentText();
             //var data = JSON.parse(json);
 
             //break;
+            // insert information into the right column, of the current row
         }
     }
 }
