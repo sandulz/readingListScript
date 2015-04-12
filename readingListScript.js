@@ -90,8 +90,12 @@ function fetchBookData() {
             var webReaderLink = (dataAll.items[0]["accessInfo"]["webReaderLink"]);
             var webReaderLinkCell = range.offset(i, 10, 1, 1);
                 webReaderLinkCell.setValue(webReaderLink);
-            
-            // fix empty cell query mystery google API book
+
+            //todo
+            // 1. If a json returns "undefined", print nothing to the cell
+            // 2. If the ISMN doesn't return anything, ie https://www.googleapis.com/books/v1/volumes?q=isbn:9780060189877
+            //      - skip and go to next row lookup
+            // if the row is already filled up, ignore? 
         }
     }
 }
