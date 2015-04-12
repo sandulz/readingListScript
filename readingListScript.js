@@ -1,3 +1,25 @@
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  // Or DocumentApp or FormApp.
+  ui.createMenu('Custom Menu')
+      .addItem('Get Book Data', 'menuItem1')
+      .addSeparator()
+      //.addSubMenu(ui.createMenu('Sub-menu')
+          //.addItem('Second item', 'menuItem2'))
+      .addToUi();
+}
+
+function menuItem1() {
+  SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
+       .alert('Getting Book Data');
+       fetchBookData;
+}
+
+//function menuItem2() {
+//  SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
+//     .alert('You clicked the second menu item!');
+//}
+
 function setRowColors() {
         var range = SpreadsheetApp.getActiveSheet().getDataRange();
         var statusColumnOffset = getStatusColumnOffset();
@@ -14,11 +36,12 @@ function setRowColors() {
                 rowRange.setBackgroundColor("#FFC2C2"); //red            
             } else if (status === '') {
                 rowRange.setBackgroundColor("#FFFFFF"); //white
-            } else if (status === 'Reference') {
+            } else if (status === 'On Deck') {
                 rowRange.setBackgroundColor("#FFE0C2"); //orange
             }
         }
     }
+
     //Returns the offset value of the column titled "Status"
     //(eg, if the 7th column is labeled "Status", this function returns 6)
 function getStatusColumnOffset() {
@@ -30,6 +53,7 @@ function getStatusColumnOffset() {
         }
     }
 }
+
 function insertTopRow() {
     var ss = SpreadsheetApp.getActiveSheet();
     var rowsArray = ss.getRange("A2:J2").getValues();
@@ -38,6 +62,7 @@ function insertTopRow() {
             ss.insertRows(2);
     }
 }
+
 var formatISBN = function() {
 var range = SpreadsheetApp.getActiveSheet().getRange('A:A');
     for (var i = range.getRow(); i < range.getLastRow(); i++) {
@@ -47,6 +72,7 @@ var range = SpreadsheetApp.getActiveSheet().getRange('A:A');
         cell.setValue(formattedData);
     }
 };
+
 function fetchBookData() {
     var range = SpreadsheetApp.getActiveSheet().getDataRange();
     for (var i = range.getRow(); i < range.getLastRow(); i++) {
@@ -90,35 +116,24 @@ function fetchBookData() {
             var webReaderLink = (dataAll.items[0]["accessInfo"]["webReaderLink"]);
             var webReaderLinkCell = range.offset(i, 10, 1, 1);
                 webReaderLinkCell.setValue(webReaderLink);
-
-            //todo
-            // 1. If a json returns "undefined", print nothing to the cell
-            // 2. If the ISMN doesn't return anything, ie https://www.googleapis.com/books/v1/volumes?q=isbn:9780060189877
-            //      - skip and go to next row lookup
-            // if the row is already filled up, ignore? 
         }
     }
 }
+
 // Putting this at the bottom, to work with JS best practices
 function onEdit(e) {
     setRowColors();
     insertTopRow();
     formatISBN();
-    fetchBookData();
 }
-
-
-
-
-
 
 /********************
 * TODO *
 ********************/
 
-// Import the book information, using just the ISBN lookup, from Google Book API
-// https://developers.google.com/books/docs/v1/getting_started
-// https://www.googleapis.com/books/v1/volumes?q=isbn:9780061766084
-// https://www.googleapis.com/apiName/apiVersion/resourcePath?parameters
-// Can be 10 or 13 digit ISBN for google API
+// 1. If a json returns "undefined", print nothing to the cell
+// 2. If the ISMN doesn't return anything, ie https://www.googleapis.com/books/v1/volumes?q=isbn:9780060189877
+//      - skip and go to next row lookup
+// if the row is already filled up, ignore? 
+// add Cache service? 
 
