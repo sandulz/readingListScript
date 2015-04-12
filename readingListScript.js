@@ -11,8 +11,8 @@ function onOpen() {
 
 function menuItem1() {
   SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
-       .alert('Getting Book Data');
-       fetchBookData;
+       .alert('Getting Book Data. Hang tight...');
+       fetchBookData();
 }
 
 //function menuItem2() {
