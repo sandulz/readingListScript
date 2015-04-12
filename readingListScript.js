@@ -53,8 +53,8 @@ function fetchBookData() {
         rowRange = range.offset(i, 0, 1);
         cellData = rowRange.offset(0, 0).getValue();
         
-
-        if (cellData != "undefined") {
+        if (cellData === "") {
+        } else if (cellData != "undefined") {
             var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData;
             var response = UrlFetchApp.fetch(url);
             var dataAll = JSON.parse(response);
@@ -91,9 +91,6 @@ function fetchBookData() {
             var webReaderLinkCell = range.offset(i, 10, 1, 1);
                 webReaderLinkCell.setValue(webReaderLink);
             
-
-            //break;
-            // fix undefined results
             // fix empty cell query mystery google API book
         }
     }
