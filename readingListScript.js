@@ -27,13 +27,13 @@ function setRowColors() {
             rowRange = range.offset(i, 0, 1);
             status = rowRange.offset(0, statusColumnOffset).getValue();
             if (status.match(/Finished*/)) {
-                rowRange.setBackgroundColor("#C2FFC2"); //green 
+                rowRange.setBackgroundColor("#C2FFC2"); //green
             } else if (status == 'Reading') {
                 rowRange.setBackgroundColor("#FFFFC2"); //yellow
             } else if (status == 'Not Started') {
                 rowRange.setBackgroundColor("#FFFFFF"); //white
             } else if (status == 'Unfinished') {
-                rowRange.setBackgroundColor("#FFC2C2"); //red            
+                rowRange.setBackgroundColor("#FFC2C2"); //red
             } else if (status === '') {
                 rowRange.setBackgroundColor("#FFFFFF"); //white
             } else if (status === 'On Deck') {
@@ -78,7 +78,7 @@ function fetchBookData() {
     for (var i = range.getRow(); i < range.getLastRow(); i++) {
         rowRange = range.offset(i, 0, 1);
         cellData = rowRange.offset(0, 0).getValue();
-        
+
         if (cellData === "") {
         } else if (cellData != "undefined") {
             var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData;
@@ -92,7 +92,7 @@ function fetchBookData() {
             var subtitle = (dataAll.items[0]["volumeInfo"]["subtitle"]);
             var subtitleCell = range.offset(i, 2, 1, 1);
                 subtitleCell.setValue(subtitle);
-                
+
             var authors = (dataAll.items[0]["volumeInfo"]["authors"]);
             var authorsCell = range.offset(i, 3, 1, 1);
                 authorsCell.setValue(authors);
@@ -100,19 +100,19 @@ function fetchBookData() {
             var printType = (dataAll.items[0]["volumeInfo"]["printType"]);
             var printTypeCell = range.offset(i, 4, 1, 1);
                 printTypeCell.setValue(printType);
-            
+
             var pageCount = (dataAll.items[0]["volumeInfo"]["pageCount"]);
             var pageCountCell = range.offset(i, 5, 1, 1);
                 pageCountCell.setValue(pageCount);
-            
+
             var publisher = (dataAll.items[0]["volumeInfo"]["publisher"]);
             var publisherCell = range.offset(i, 6, 1, 1);
                 publisherCell.setValue(publisher);
-            
+
             var publishedDate = (dataAll.items[0]["volumeInfo"]["publishedDate"]);
             var publishedDateCell = range.offset(i, 7, 1, 1);
                 publishedDateCell.setValue(publishedDate);
-            
+
             var webReaderLink = (dataAll.items[0]["accessInfo"]["webReaderLink"]);
             var webReaderLinkCell = range.offset(i, 10, 1, 1);
                 webReaderLinkCell.setValue(webReaderLink);
