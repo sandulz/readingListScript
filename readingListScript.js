@@ -81,7 +81,7 @@ function fetchBookData() {
 
         if (cellData === "") {
         } else if (cellData != "undefined") {
-            var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData;
+          var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData + "&country=US";
             var response = UrlFetchApp.fetch(url);
             var dataAll = JSON.parse(response);
 
