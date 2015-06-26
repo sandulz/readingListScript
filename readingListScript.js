@@ -1,3 +1,4 @@
+// Button in Custom Menu
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   // Or DocumentApp or FormApp.
@@ -11,14 +12,8 @@ function onOpen() {
 
 function menuItem1() {
   SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
-       .alert('Getting Book Data. Hang tight...');
        fetchBookData();
 }
-
-//function menuItem2() {
-//  SpreadsheetApp.getUi() // Or DocumentApp or FormApp.
-//     .alert('You clicked the second menu item!');
-//}
 
 function setRowColors() {
         var range = SpreadsheetApp.getActiveSheet().getDataRange();
