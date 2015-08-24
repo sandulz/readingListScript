@@ -27,8 +27,8 @@ function setRowColors() {
                 rowRange.setBackgroundColor("#FFFFC2"); //yellow
             } else if (status == 'Not Started') {
                 rowRange.setBackgroundColor("#FFFFFF"); //white
-            } else if (status == 'Unfinished') {
-                rowRange.setBackgroundColor("#FFC2C2"); //red
+            } else if (status == 'Unfinished, for now') {
+                rowRange.setBackgroundColor("#EAD1DC"); //magenta
             } else if (status === '') {
                 rowRange.setBackgroundColor("#FFFFFF"); //white
             } else if (status === 'On Deck') {
