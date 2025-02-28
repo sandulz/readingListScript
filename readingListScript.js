@@ -101,24 +101,16 @@ function fetchBookData() {
             var authorsCell = range.offset(i, 3, 1, 1);
                 authorsCell.setValue(authors);
 
-            var printType = (dataAll.items[0]["volumeInfo"]["printType"]);
-            var printTypeCell = range.offset(i, 4, 1, 1);
-                printTypeCell.setValue(printType);
-
-            var pageCount = (dataAll.items[0]["volumeInfo"]["pageCount"]);
-            var pageCountCell = range.offset(i, 5, 1, 1);
+            var pageCount = dataAll.items[0].volumeInfo.pageCount || '';
+            var pageCountCell = range.offset(i, 4, 1, 1);
                 pageCountCell.setValue(pageCount);
 
-            var publisher = (dataAll.items[0]["volumeInfo"]["publisher"]);
-            var publisherCell = range.offset(i, 6, 1, 1);
-                publisherCell.setValue(publisher);
-
             var publishedDate = (dataAll.items[0]["volumeInfo"]["publishedDate"]);
-            var publishedDateCell = range.offset(i, 7, 1, 1);
+            var publishedDateCell = range.offset(i, 5, 1, 1);
                 publishedDateCell.setValue(publishedDate);
 
-            var webReaderLink = (dataAll.items[0]["accessInfo"]["webReaderLink"]);
-            var webReaderLinkCell = range.offset(i, 10, 1, 1);
+            var webReaderLink = dataAll.items[0].accessInfo.webReaderLink || '';
+            var webReaderLinkCell = range.offset(i, 11, 1, 1);
                 webReaderLinkCell.setValue(webReaderLink);
         } catch (error) {
             Logger.log("Error processing ISBN " + cellData + ": " + error.toString());
