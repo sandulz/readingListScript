@@ -75,10 +75,19 @@ function fetchBookData() {
         cellData = rowRange.offset(0, 0).getValue();
 
         if (cellData === "") {
-        } else if (cellData != "undefined") {
-          var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData + "&country=US";
+            continue; // Skip empty cells
+        }
+        
+        try {
+            var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + cellData + "&country=US";
             var response = UrlFetchApp.fetch(url);
             var dataAll = JSON.parse(response);
+
+            // Check if we got any results
+            if (!dataAll.items || dataAll.items.length === 0) {
+                Logger.log("No book found for ISBN: " + cellData);
+                continue; // Skip to next ISBN if no results
+            }
 
             var title = (dataAll.items[0]["volumeInfo"]["title"]);
             var titleCell = range.offset(i, 1, 1, 1);
@@ -111,6 +120,9 @@ function fetchBookData() {
             var webReaderLink = (dataAll.items[0]["accessInfo"]["webReaderLink"]);
             var webReaderLinkCell = range.offset(i, 10, 1, 1);
                 webReaderLinkCell.setValue(webReaderLink);
+        } catch (error) {
+            Logger.log("Error processing ISBN " + cellData + ": " + error.toString());
+            continue; // Skip to next ISBN if there's an error
         }
     }
 }
